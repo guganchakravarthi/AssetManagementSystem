@@ -1,39 +1,44 @@
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import './App.css';
+import Login from './pages/login';
+import Signup from './pages/signup';
+import AssetForm from './pages/assetform';
+import Home from './pages/home';
+import EmployeeAsign from './pages/asign';
+import AssetTable from './pages/assetTable';
 
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import './App.css'
-import Login from './pages/login'
-import Signup from './pages/signup'
-import AssetForm from './pages/assetform'
-import Home from './pages/home'
-import EmployeeManagement from './pages/employee'
-import EmployeeAsign from './pages/asign'
-import AssetTable from './pages/assetTable'
-import Maintenance from './pages/maintance'
+import EmployeeList from './pages/employeeList'; 
+import EmployeeForm from './pages/employee';
+import MaintenanceForm from './pages/maintanceForm';
+import MaintenanceList from './pages/maintanceList';
 
 function App() {
-
-
   return (
-    <>
-      <BrowserRouter>
-      
+    <BrowserRouter>
+      <Routes>
+        {/* Authentication */}
+        <Route path="/" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
 
-        <Routes>
-          <Route element={<Login/>} path='/'/>
-          <Route element={<Signup/>} path='/signup' />
-          <Route path="/home" element={<Home />} />
-        <Route path="/assets" element={<AssetTable />} /> 
+        {/* Dashboard/Home */}
+        <Route path="/home" element={<Home />} />
+
+        {/* Assets Management */}
+        <Route path="/assets" element={<AssetTable />} />
         <Route path="/add-asset" element={<AssetForm />} />
         <Route path="/edit-asset/:id" element={<AssetForm />} />
-        <Route path="/maintenance" element={<Maintenance />} />
-        <Route path="/employees" element={<EmployeeManagement />} />
-        <Route path="/assign-asset" element={<EmployeeAsign />} />
-          
+        <Route path="//maintenance" element={<MaintenanceList />} />
+        <Route path="/maintenance-form" element={<MaintenanceForm />} />
+        <Route path="/maintenance-edit/:id" element={<MaintenanceForm />} />
 
-          </Routes>
-      </BrowserRouter>
-    </>
-  )
+        {/* Employee Management */}
+        <Route path="/employee-list" element={<EmployeeList />} /> 
+        <Route path="/employee-edit/:id" element={<EmployeeForm />} />
+        <Route path="/employee-add" element={<EmployeeForm />} /> 
+        <Route path="/assign-asset" element={<EmployeeAsign />} />
+      </Routes>
+    </BrowserRouter>
+  );
 }
 
-export default App
+export default App;

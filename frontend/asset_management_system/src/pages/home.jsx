@@ -56,7 +56,7 @@ export default function Home() {
   const menuItems = [
     { name: "Asset", path: "/assets" },
     { name: "Maintenance", path: "/maintenance" },
-    { name: "Employee", path: "/employees" },
+    { name: "Employee", path: "/employee-list" },
     { name: "Assign Asset", path: "/assign-asset" },
   ];
 

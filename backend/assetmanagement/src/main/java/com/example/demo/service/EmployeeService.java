@@ -11,6 +11,8 @@ import com.example.demo.models.EmployeeEntity;
 import com.example.demo.repository.AssetRepository;
 import com.example.demo.repository.EmployeeRepository;
 
+import jakarta.transaction.Transactional;
+
 
 @Service
 public class EmployeeService {
@@ -85,21 +87,24 @@ public class EmployeeService {
 		return employeeRepository.findByAssetModelId(assetId);
 	}
 
+	@Transactional
 	public String deleteEmployeeAndAssetReturns(int id) {
-		Optional<EmployeeEntity> exictingEmployee=employeeRepository.findById(id);
-		if(exictingEmployee.isPresent()) {
-			EmployeeEntity employee=exictingEmployee.get();
-			AssetModel model =employee.getAssetModel();
-			model.setStatus("warehouse");
-			model.setEmployeeEntity(null);
-			assetRepository.save(model);
-			
-			employeeRepository.deleteById(id);
-			return "successfully deleted";
-		}else {
-			return "employee not found";
-		}
-			
-		
+	    Optional<EmployeeEntity> existingEmployee = employeeRepository.findById(id);
+	    
+	    if (existingEmployee.isPresent()) {
+	        EmployeeEntity employee = existingEmployee.get();
+	        
+	        if (employee.getAssetModel() != null) {
+	            AssetModel model = employee.getAssetModel();
+	            model.setStatus("warehouse");
+	            model.setEmployeeEntity(null);
+	            assetRepository.save(model); // Update the asset before deleting the employee
+	        }
+
+	        employeeRepository.deleteById(id); // Now delete the employee
+	        return "Successfully deleted";
+	    } else {
+	        return "Employee not found";
+	    }
 	}
 }

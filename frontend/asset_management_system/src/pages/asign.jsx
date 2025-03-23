@@ -22,6 +22,7 @@ const EmployeeAsign = () => {
       const response = await fetch(apiUrl, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
+        withCredentials: true ,
       });
 
       if (!response.ok) {
